@@ -6,13 +6,11 @@ import java.time.LocalDate;
 
 public class Bebida extends Producto implements IComestible, IImportado {
 
-    //Atributos
     private double graduacionAlcoholica;
     private boolean esImportado;
     private double calorias;
     private LocalDate fechaVencimiento;
 
-    //Constructor
     public Bebida(String id, String descripcion, int cantidadEnStock, double precio, int porcentajeGanancia, double porcentajeDescuento,
                   double graduacionAlcoholica, boolean esImportado, double calorias, LocalDate fechaVencimiento) {
 
@@ -23,7 +21,6 @@ public class Bebida extends Producto implements IComestible, IImportado {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    //Getters
     public double getGraduacionAlcoholica() {
         return graduacionAlcoholica;
     }
@@ -31,8 +28,6 @@ public class Bebida extends Producto implements IComestible, IImportado {
     public boolean esImportado() {
         return esImportado;
     }
-
-    //Metodos
 
     protected static String generadorId(String id) {
         if (id == null || id.length() != 5 || !id.matches("AC\\d{3}")) {

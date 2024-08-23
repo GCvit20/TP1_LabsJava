@@ -6,7 +6,6 @@ import exceptions.PrecioConDescuentoInvalidoException;
 
 public class Producto {
 
-    // Atributos
     private String id;
     private String descripcion;
     private int stock;
@@ -14,8 +13,6 @@ public class Producto {
     private int porcentajeGanancia;
     private boolean esDisponibleParaLaVenta;
     private double porcentajeDescuento;
-
-    //Constructores
 
     public Producto(String id, String descripcion, int stock, double precio, int porcentajeGanancia, double porcentajeDescuento) {
 
@@ -28,7 +25,6 @@ public class Producto {
         this.esDisponibleParaLaVenta = true;
     }
 
-    // Getters y Setters
 
     public String getId() {
         return id;
@@ -70,7 +66,9 @@ public class Producto {
         return porcentajeGanancia;
     }
 
-    //Metodos
+    public void setPorcentajeGanancia(int porcentajeGanancia) {
+        this.porcentajeGanancia = porcentajeGanancia;
+    }
 
     public double calcularPorcentajeGanancia(Producto producto, int porcentajeGanancia, double totalProducto) {
 

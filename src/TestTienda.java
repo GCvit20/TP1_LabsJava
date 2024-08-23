@@ -1,11 +1,12 @@
 import enums.TipoAplicacion;
 import models.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-public class Main {
+public class TestTienda {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int opcion;
@@ -37,6 +38,9 @@ public class Main {
                         System.out.println(tienda.mostrarProductos(tienda.getProductosEnStock()));
                         break;
                     case 2:
+                        System.out.println(tienda);
+                        break;
+                    case 3:
                         tienda.comprarProducto(bebida);
                         tienda.comprarProducto(bebida2);
                         tienda.comprarProducto(envasado);
@@ -45,15 +49,15 @@ public class Main {
                         tienda.comprarProducto(limpieza2);
                         System.out.println("Productos agregado con exito.");
                         break;
-                    case 3:
+                    case 4:
                         Producto bebida3 = new Bebida("AC789", "Fernet Branca", 20, 5000, 0, 0, 1, false, 2, fechaBebida);
                         tienda.comprarProducto(bebida3);
                         break;
-                    case 4:
+                    case 5:
                         Producto envasado3 = new Envasado("AB753", "Miel", 101, 200, 0, 0, "Vidrio", true, 2, fechaEnvasado);
                         tienda.comprarProducto(envasado3);
                         break;
-                    case 5:
+                    case 6:
                         tienda.asignarNuevoDescuento(bebida, 10);
                         tienda.asignarNuevoDescuento(bebida2, 5);
                         tienda.asignarNuevoDescuento(envasado, 10);
@@ -62,17 +66,29 @@ public class Main {
                         tienda.asignarNuevoDescuento(limpieza2, 20);
                         System.out.println("Descuentos actualizados con exito.");
                         break;
-                    case 6:
+                    case 7:
                         tienda.asignarNuevoDescuento(bebida, 20);
                         break;
-                    case 7:
+                    case 8:
+                        tienda.asignarNuevaGanancia(bebida, 5);
+                        tienda.asignarNuevaGanancia(bebida2, 10);
+                        tienda.asignarNuevaGanancia(envasado, 15);
+                        tienda.asignarNuevaGanancia(envasado2, 10);
+                        tienda.asignarNuevaGanancia(limpieza, 20);
+                        tienda.asignarNuevaGanancia(limpieza2, 15);
+                        System.out.println("Porcentaje de ganancia actualizados con exito.");
+                        break;
+                    case 9:
+                        tienda.asignarNuevaGanancia(bebida, 30);
+                        break;
+                    case 10:
                         List<Producto> listaVenta = new ArrayList<>();
                         listaVenta.add(bebida);
                         listaVenta.add(limpieza);
                         listaVenta.add(envasado);
                         System.out.println(tienda.ventaProducto(listaVenta, 10));
                         break;
-                    case 8:
+                    case 11:
                         List<Producto> listaVenta2 = new ArrayList<>();
                         listaVenta2.add(bebida);
                         listaVenta2.add(limpieza);
@@ -80,25 +96,22 @@ public class Main {
                         listaVenta2.add(envasado2);
                         System.out.println(tienda.ventaProducto(listaVenta2, 10));
                         break;
-                    case 9:
+                    case 12:
                         List<Producto> listaVenta3 = new ArrayList<>();
                         listaVenta3.add(bebida);
                         listaVenta3.add(limpieza);
                         listaVenta3.add(envasado);
                         System.out.println(tienda.ventaProducto(listaVenta3, 15));
                         break;
-                    case 10:
-                        break;
-                    case 11:
-                        break;
-                    case 12:
-                        break;
                     case 13:
+                        System.out.println(tienda.obtenerComestiblesConMenorDescuento(15));
+                        break;
+                    case 14:
                         System.out.println("Saliendo de la tienda...");
                         flag = false;
                         break;
                     default:
-                        System.out.println("Opción no válida. Por favor, elige una opción entre 1 y 14.");
+                        System.out.println("Opción no válida. Por favor, elige una opción entre 1 y 12.");
                         break;
                 }
             } catch (Exception e) {

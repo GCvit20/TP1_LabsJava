@@ -1,21 +1,18 @@
 package models;
 import exceptions.*;
+import interfaces.IComestible;
 import interfaces.IImportado;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Tienda {
 
-    //Atributos
     private String nombre;
     private int numeroMaximoProductosEnStock;
     private BigDecimal saldoEnCaja;
     private List<Producto> productosEnStock;
 
-    //Constructor
     public Tienda(String nombre, int numeroMaximoProductosEnStock, BigDecimal saldoEnCaja) {
         this.nombre = nombre;
         this.numeroMaximoProductosEnStock = numeroMaximoProductosEnStock;
@@ -24,7 +21,15 @@ public class Tienda {
 
     }
 
-    //Getter y Setter
+    //Getters y Setters
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getNumeroMaximoProductosEnStock() {
+        return numeroMaximoProductosEnStock;
+    }
 
     public BigDecimal getSaldoEnCaja() {
         return saldoEnCaja;
@@ -38,32 +43,27 @@ public class Tienda {
         return productosEnStock;
     }
 
-
     //Metodos
-
     public boolean agregarProducto(Producto producto) {
 
         verificarCapacidadMaxima(producto);
 
-        // Verifica si el producto ya existe en la lista
         for (Producto p : productosEnStock) {
             if (p.getId().equals(producto.getId())) {
-                // Si el producto ya está en stock, actualiza el stock
                 p.setStock(p.getStock() + producto.getStock());
                 return true;
             }
         }
-
         return productosEnStock.add(producto);
     }
 
-    public List<Producto> comprarProducto(Producto producto) {
+    public void comprarProducto(Producto producto) {
         BigDecimal totalProductoConvertido = calcularTotalProducto(producto);
 
         if (esSaldoSuficiente(totalProductoConvertido)) {
             if (agregarProducto(producto)) {
                 reducirSaldoEnCaja(totalProductoConvertido);
-                return productosEnStock;
+                //return productosEnStock;
             } else {
                 throw new ProductoNoAgregadoException(producto);
             }
@@ -111,7 +111,6 @@ public class Tienda {
 
             conteoProductos.put(producto, conteoProductos.getOrDefault(producto, 0) + 1);
         }
-
 
         if (cantidadSolicitada > 12) {
             return false;
@@ -189,7 +188,7 @@ public class Tienda {
             stockList.append(producto.toString()).append("\n");
         }
 
-        if (stockList.length() == 0) {
+        if (stockList.isEmpty()) {
             throw new RuntimeException("No hay productos cargados en la tienda.");
         }
 
@@ -205,30 +204,54 @@ public class Tienda {
         producto.setPorcentajeDescuento(porcentajeDescuento);
     }
 
+    public void asignarNuevaGanancia(Producto producto, int porcentajeGanancia) {
+
+        if(!producto.esDescuentoValido(producto, porcentajeGanancia)) {
+            throw new PorcentajeDeGananciaInvalidoException(porcentajeGanancia);
+        }
+
+        producto.setPorcentajeGanancia(porcentajeGanancia);
+    }
+
+    public String obtenerComestiblesConMenorDescuento(double porcentajeDescuento) {
+
+        List<String> comestiblesConMenorDescuento = productosEnStock.stream()
+                .filter(producto -> producto instanceof IComestible
+                        && !((IImportado) producto).esImportado()
+                        && producto.getPorcentajeDescuento() < porcentajeDescuento)
+                .sorted(Comparator.comparingDouble(Producto::getPrecio))
+                .map(producto -> producto.getDescripcion().toUpperCase())
+                .collect(Collectors.toList());
+
+        return String.join(", ", comestiblesConMenorDescuento);
+    }
+
     @Override
     public String toString() {
-        return "Tienda {" +
-                "nombre='" + nombre +
-                ", numeroMaximoProductosEnStock=" + numeroMaximoProductosEnStock +
-                ", saldoEnCaja=" + saldoEnCaja +
-                ", productosEnStock=" + productosEnStock +
-                '}';
+
+        return String.format("Nombre: %s, numero de stock: %d, saldo en caja: %.2f \n Productos en stock: %s",
+                getNombre(),
+                getNumeroMaximoProductosEnStock(),
+                getSaldoEnCaja(),
+                getProductosEnStock()
+        );
     }
 
     public void mostrarMenu() {
         System.out.println("=== Menú de Opciones ===");
         System.out.println("1. Mostrar los productos en stock");
-        System.out.println("2. Agregar productos (La tienda no cuenta con productos inicialmente)");
-        System.out.println("3. Agregar Productos (Exceder saldo de la tienda)");
-        System.out.println("4. Agregar Productos (Exceder stock maximo de la tienda)");
-        System.out.println("5. Actualizar descuentos de productos (Inicialmente el descuento de todos los productos es 0)");
-        System.out.println("6. Actualizar descuentos de productos (No cumple con condición descuento maximo)");
-        System.out.println("7. Realizar venta exitosamente");
-        System.out.println("8. Realizar venta (No cumple con condición de venta de menos de 3 productos)");
-        System.out.println("9. Realizar venta (No cumple con condición de venta de menos de 12 productos de cada tipo)");
-        System.out.println("10. Opcion 10");
-        System.out.println("11. Opcion 11");
-        System.out.println("12. Opcion 12");
-        System.out.println("13. Salir");
+        System.out.println("2. Mostrar tienda");
+        System.out.println("3. Agregar productos (La tienda no cuenta con productos inicialmente)");
+        System.out.println("4. Agregar Productos (Exceder saldo de la tienda)");
+        System.out.println("5. Agregar Productos (Exceder stock maximo de la tienda)");
+        System.out.println("6. Actualizar descuentos de productos (Inicialmente el descuento de todos los productos es 0)");
+        System.out.println("7. Actualizar descuentos de productos (No cumple con condición descuento maximo)");
+        System.out.println("8. Actualizar porcentaje de ganancia de productos (Inicialmente el descuento de todos los productos es 0)");
+        System.out.println("9. Actualizar porcentaje de ganancia de productos (No cumple con condición de porcentaje valido)");
+        System.out.println("10. Realizar venta exitosamente");
+        System.out.println("11. Realizar venta (No cumple con condición de venta de menos de 3 productos)");
+        System.out.println("12. Realizar venta (No cumple con condición de venta de menos de 12 productos de cada tipo)");
+        System.out.println("13. Obtener comestibles con descuento menor a 15% con API STREAMS");
+        System.out.println("14. Salir");
     }
 }
