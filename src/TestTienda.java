@@ -16,7 +16,7 @@ public class TestTienda {
         LocalDate fechaEnvasado = LocalDate.of(2025, 7, 20);
 
         BigDecimal saldoCaja = BigDecimal.valueOf(50000);
-        Tienda tienda = new Tienda("Mc", 100, saldoCaja);
+        Tienda tienda = new Tienda("GreenMarket", 100, saldoCaja);
 
         Producto bebida = new Bebida("AC123", "Vodka Absolut", 10, 100, 0, 0, 1, false, 2, fechaBebida);
         Producto bebida2 = new Bebida("AC456", "Gin Bombay", 20, 100, 0, 0, 1, false, 2, fechaBebida);

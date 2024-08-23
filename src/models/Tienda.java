@@ -112,11 +112,7 @@ public class Tienda {
             conteoProductos.put(producto, conteoProductos.getOrDefault(producto, 0) + 1);
         }
 
-        if (cantidadSolicitada > 12) {
-            return false;
-        }
-
-        if (conteoProductos.size() > 3) {
+        if (cantidadSolicitada > 12 || conteoProductos.size() > 3) {
             return false;
         }
 
