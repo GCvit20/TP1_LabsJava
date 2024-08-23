@@ -1,6 +1,6 @@
 <h1 align = "center">🍏 GreenMarket 🍏</h1>
 <p align="center">
-<img src="https://i.ibb.co/f4ZVpn2/cf4881ea-2f88-4c92-896b-53f0f39ce034.jpg" style="max-width: 100%; display: inline-block;" />
+<img src="https://i.ibb.co/0h1pMFc/cf4881ea-2f88-4c92-896b-53f0f39ce034.jpg" style="max-width: 100%; display: inline-block;" />
 </p>
 
 ## Descripción
