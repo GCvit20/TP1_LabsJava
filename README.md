@@ -5,7 +5,7 @@
 
 ## Descripción
 
-Para este proyecto se realizo una tienda con un sistema de productos que contiene productos comestibles y productos de limpieza. El sistema aplica descuentos, impuestos y ganancias. Ademas se pueden generar compras y ventas de los productos, entre otras cosas.
+Para este proyecto se realizo una tienda con un sistema de productos que contiene productos comestibles y limpieza. El sistema aplica descuentos, impuestos y ganancias. Ademas se pueden generar compras y ventas de los mismos, entre otras cosas.
 
 ## Manual
 
